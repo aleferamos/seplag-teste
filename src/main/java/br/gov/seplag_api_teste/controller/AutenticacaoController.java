@@ -8,6 +8,11 @@ import br.gov.seplag_api_teste.reqres.LoginResponse;
 import br.gov.seplag_api_teste.reqres.RefreshTokenRequest;
 import br.gov.seplag_api_teste.service.AutenticacaoService;
 import br.gov.seplag_api_teste.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.ObjectUtils;
@@ -18,8 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/auth")
 @RestController
+@RequestMapping("/auth")
+@Tag(name = "Autenticação", description = "Endpoints relacionados a autenticação")
 public class AutenticacaoController {
     private final JwtService jwtService;
 
@@ -31,6 +37,20 @@ public class AutenticacaoController {
     }
 
     @PostMapping("/login")
+    @Operation(
+            summary = "Fazer login",
+            description = "End point responsável por fazer login e retornar o token",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Login feito com sucesso",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class)
+                            )
+                    )
+            }
+    )
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginUserDto) {
         Usuario authenticatedUser = autenticacaoService.authenticate(loginUserDto);
 
@@ -43,6 +63,20 @@ public class AutenticacaoController {
     }
 
     @PostMapping("/refresh")
+    @Operation(
+            summary = "Refresh token",
+            description = "End point responsável por dar refresh e renovar o token",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Token renovado com sucesso",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class)
+                            )
+                    )
+            }
+    )
     public ResponseEntity<LoginResponse> refresh(@RequestBody RefreshTokenRequest request) {
         String refreshToken = request.refreshToken();
 
@@ -60,6 +94,20 @@ public class AutenticacaoController {
     }
 
     @GetMapping("/token-is-valid")
+    @Operation(
+            summary = "Token é valido",
+            description = "End point responsável por verificar se token é válido",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Token válido",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = DateResponse.class)
+                            )
+                    )
+            }
+    )
     public ResponseEntity<DateResponse> authenticate(
             @RequestParam String token
     ) {
