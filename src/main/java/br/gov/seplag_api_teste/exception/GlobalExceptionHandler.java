@@ -43,6 +43,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Map<String, Object>> handleBusinessException(BusinessException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put(TIMESTAMP, LocalDateTime.now());
+        response.put(STATUS, HttpStatus.UNAUTHORIZED);
+        response.put(ERROR, "Exceção de regra de negócio.");
+        response.put(MESSAGE, ex.getMessage());
+
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
     @ExceptionHandler(RefreshTokenException.class)
     public ResponseEntity<Map<String, Object>> handleRefreshTokenException(RefreshTokenException ex) {
         Map<String, Object> response = new HashMap<>();
