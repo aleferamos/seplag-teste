@@ -1,9 +1,10 @@
 package br.gov.seplag_api_teste.controller;
 
-import br.gov.seplag_api_teste.mappers.ServidorEfetivoMapper;
-import br.gov.seplag_api_teste.reqres.ServidorEfetivoRequest;
+import br.gov.seplag_api_teste.mappers.ServidorTemporarioMapper;
 import br.gov.seplag_api_teste.reqres.ServidorEfetivoResponse;
-import br.gov.seplag_api_teste.service.ServidorEfetivoService;
+import br.gov.seplag_api_teste.reqres.ServidorTemporarioRequest;
+import br.gov.seplag_api_teste.reqres.ServidorTemporarioResponse;
+import br.gov.seplag_api_teste.service.ServidorTemporarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,11 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/servidor-efetivo")
-@Tag(name = "Servidor Efetivo", description = "Endpoints relacionados a servidores efetivos")
-public class ServidorEfetivoController {
-    private final ServidorEfetivoService service;
-    private final ServidorEfetivoMapper mapper;
+@RequestMapping("/servidor-temporario")
+@Tag(name = "Servidor Temporario", description = "Endpoints relacionados a servidores temporarios")
+public class ServidorTemporarioController {
+    private final ServidorTemporarioService service;
+    private final ServidorTemporarioMapper mapper;
 
     @PostMapping("/salvar")
     @Operation(
@@ -50,15 +51,16 @@ public class ServidorEfetivoController {
                                                 "nomeMae": "string",
                                                 "nomePai": "string"
                                               },
-                                              "matricula": "string"
+                                              "dataAdmissao": "2025-04-03",
+                                              "dataDemissao": "2025-04-03"
                                             }
                                             """
                             )
                     )
             )
     )
-    ResponseEntity<ServidorEfetivoResponse> salvar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest) {
-        var servidorEfeitoSalvo = service.salvar(mapper.toEntity(servidorEfetivoRequest));
+    ResponseEntity<ServidorTemporarioResponse> salvar(@RequestBody ServidorTemporarioRequest servidorTemporarioRequest) {
+        var servidorEfeitoSalvo = service.salvar(mapper.toEntity(servidorTemporarioRequest));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
     }
@@ -68,8 +70,8 @@ public class ServidorEfetivoController {
             summary = "Atualizar servidor efetivo",
             description = "End point responsável por atualizar um servidor efetivo."
     )
-    ResponseEntity<ServidorEfetivoResponse> atualizar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest) {
-        var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorEfetivoRequest));
+    ResponseEntity<ServidorTemporarioResponse> atualizar(@RequestBody ServidorTemporarioRequest servidorTemporarioRequest) {
+        var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorTemporarioRequest));
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper.toResponse(servidorEfeitoSalvo));
     }
@@ -79,16 +81,22 @@ public class ServidorEfetivoController {
             summary = "Buscar servidor efetivo por id",
             description = "End point responsável buscar servidor efetivo por id"
     )
-    ResponseEntity<ServidorEfetivoResponse> buscarPorId(@PathVariable Long id) {
+    ResponseEntity<ServidorTemporarioResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(mapper.toResponse(service.obterPorId(id)));
     }
 
     @GetMapping("/listar")
     @Operation(
             summary = "Listar Servidor",
-            description = "End point responsável buscar servidor Listar Servidor"
+            description = "End point responsável buscar servidor Listar Servidor",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Servidor retornado com sucesso"
+                    )
+            }
     )
-    ResponseEntity<Page<ServidorEfetivoResponse>> listar(@Parameter(hidden = true) Pageable pageable) {
+    ResponseEntity<Page<ServidorTemporarioResponse>> listar(@Parameter(hidden = true) Pageable pageable) {
         var servidores = service.listar(pageable).map(mapper::toResponse);
 
         return ResponseEntity.ok(servidores);
@@ -97,13 +105,7 @@ public class ServidorEfetivoController {
     @DeleteMapping("/excluir-por-id/{id}")
     @Operation(
             summary = "Excluir servidor",
-            description = "End point responsável excluir servidor",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "202",
-                            description = "Servidor excluido com sucesso"
-                    )
-            }
+            description = "End point responsável excluir servidor"
     )
     ResponseEntity<Page<ServidorEfetivoResponse>> excluir(@PathVariable Long id) {
         service.excluir(id);
