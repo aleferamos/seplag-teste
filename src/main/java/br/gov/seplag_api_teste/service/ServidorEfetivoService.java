@@ -38,6 +38,12 @@ public class ServidorEfetivoService {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Servidor não encontrado."));
     }
 
+    public void excluir(Long id){
+        var servidorEncontrado = obterPorId(id);
+
+        repository.delete(servidorEncontrado);
+    }
+
     private void validarServidor(ServidorEfetivo servidorEfetivo){
         if(Boolean.TRUE.equals(repository.existsByMatricula(servidorEfetivo.getMatricula()))){
             throw new BusinessException("Servidor com essa matricula já está cadastrado.");

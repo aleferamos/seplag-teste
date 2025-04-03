@@ -7,6 +7,7 @@ import br.gov.seplag_api_teste.service.ServidorEfetivoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,27 @@ public class ServidorEfetivoController {
     @Operation(
             summary = "Salvar servidor efetivo",
             description = "End point responsável por salvar um servidor efetivo.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(
+                                    name = "Exemplo de criação",
+                                    value = """
+                                            {
+                                              "pessoa": {
+                                                "nome": "string",
+                                                "dataNascimento": "2025-04-03T00:32:20.026Z",
+                                                "sexo": "string",
+                                                "nomeMae": "string",
+                                                "nomePai": "string"
+                                              },
+                                              "matricula": "string"
+                                            }
+                                            """
+                            )
+                    )
+            ),
             responses = {
                     @ApiResponse(
                             responseCode = "201",
@@ -46,7 +69,7 @@ public class ServidorEfetivoController {
                     )
             }
     )
-    ResponseEntity<ServidorEfetivoResponse> salvar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest){
+    ResponseEntity<ServidorEfetivoResponse> salvar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest) {
         var servidorEfeitoSalvo = service.salvar(mapper.toEntity(servidorEfetivoRequest));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
@@ -67,10 +90,10 @@ public class ServidorEfetivoController {
                     )
             }
     )
-    ResponseEntity<ServidorEfetivoResponse> atualizar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest){
+    ResponseEntity<ServidorEfetivoResponse> atualizar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest) {
         var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorEfetivoRequest));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper.toResponse(servidorEfeitoSalvo));
     }
 
     @GetMapping("/buscar-por-id/{id}")
@@ -88,8 +111,8 @@ public class ServidorEfetivoController {
                     )
             }
     )
-    ResponseEntity<ServidorEfetivoResponse> buscarPorId(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(service.obterPorId(id)));
+    ResponseEntity<ServidorEfetivoResponse> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(mapper.toResponse(service.obterPorId(id)));
     }
 
     @GetMapping("/listar")
@@ -103,10 +126,27 @@ public class ServidorEfetivoController {
                     )
             }
     )
-    ResponseEntity<Page<ServidorEfetivoResponse>> listar(@Parameter(hidden = true) Pageable pageable){
+    ResponseEntity<Page<ServidorEfetivoResponse>> listar(@Parameter(hidden = true) Pageable pageable) {
         var servidores = service.listar(pageable).map(mapper::toResponse);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(servidores);
+        return ResponseEntity.ok(servidores);
+    }
+
+    @DeleteMapping("/excluir-por-id/{id}")
+    @Operation(
+            summary = "Excluir servidor",
+            description = "End point responsável excluir servidor",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "202",
+                            description = "Servidor excluido com sucesso"
+                    )
+            }
+    )
+    ResponseEntity<Page<ServidorEfetivoResponse>> excluir(@PathVariable Long id) {
+        service.excluir(id);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
 }
