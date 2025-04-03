@@ -12,16 +12,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BuscarServidorEfetivoResponse {
+    private Long idPessoa;
     private String nome;
     private Integer idade;
     private Unidade unidadeLotacao;
     private List<String> linksFotosTemporarias;
 
     public BuscarServidorEfetivoResponse(
+            Long idPessoa,
             String nome,
             Integer idade,
             Unidade unidadeLotacao
     ) {
+        this.idPessoa = idPessoa;
         this.nome = nome;
         this.idade = idade;
         this.unidadeLotacao = unidadeLotacao;

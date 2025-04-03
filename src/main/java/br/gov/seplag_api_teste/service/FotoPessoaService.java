@@ -109,4 +109,8 @@ public class FotoPessoaService {
         }
         return true;
     }
+
+    List<FotoPessoa> buscarFotosDeUmaPessoa(Long id){
+        return repository.findAllByPessoaId(id);
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface ServidorEfetivoRepository extends JpaRepository<ServidorEfetivo, Long> {
     Boolean existsByMatricula(String matricula);
 
-    @Query("select distinct new br.gov.seplag_api_teste.reqres.BuscarServidorEfetivoResponse(p.nome, p.idade, "
+    @Query("select distinct new br.gov.seplag_api_teste.reqres.BuscarServidorEfetivoResponse(p.id, p.nome, p.idade, "
             + "l.unidade) "
             + "from ServidorEfetivo se "
             + "join Lotacao l on l.pessoa.id = se.pessoa.id "
