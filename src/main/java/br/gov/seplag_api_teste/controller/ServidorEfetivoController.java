@@ -12,7 +12,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,4 +48,47 @@ public class ServidorEfetivoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
     }
+
+    @PutMapping("/atualizar")
+    @Operation(
+            summary = "Atualizar servidor efetivo",
+            description = "End point responsável por atualizar um servidor efetivo.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "202",
+                            description = "Servidor atualizar com sucesso",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ServidorEfetivoResponse.class)
+                            )
+                    )
+            }
+    )
+    ResponseEntity<ServidorEfetivoResponse> atualizar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest){
+        var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorEfetivoRequest));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
+    }
+
+    @GetMapping("/buscar-por-id/{id}")
+    @Operation(
+            summary = "Buscar servidor efetivo por id",
+            description = "End point responsável buscar servidor efetivo por id",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Servidor retornado com sucesso",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ServidorEfetivoResponse.class)
+                            )
+                    )
+            }
+    )
+    ResponseEntity<ServidorEfetivoResponse> buscarPorId(@PathVariable Long id){
+        var servidorEfeitoSalvo = service.obterPorId(id);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
+    }
+
 }

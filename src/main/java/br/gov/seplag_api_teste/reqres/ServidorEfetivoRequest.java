@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties
 public record ServidorEfetivoRequest(
+        Long id,
         PessoaRequest pessoa,
         String matricula
 ) {
