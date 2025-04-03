@@ -5,6 +5,8 @@ import br.gov.seplag_api_teste.exception.BusinessException;
 import br.gov.seplag_api_teste.exception.NotFoundException;
 import br.gov.seplag_api_teste.repository.ServidorEfetivoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -40,5 +42,9 @@ public class ServidorEfetivoService {
         if(Boolean.TRUE.equals(repository.existsByMatricula(servidorEfetivo.getMatricula()))){
             throw new BusinessException("Servidor com essa matricula já está cadastrado.");
         }
+    }
+
+    public Page<ServidorEfetivo> listar(Pageable pageable){
+        return repository.findAll(pageable);
     }
 }
