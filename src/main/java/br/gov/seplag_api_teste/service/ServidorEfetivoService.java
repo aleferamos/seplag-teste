@@ -4,10 +4,13 @@ import br.gov.seplag_api_teste.entity.ServidorEfetivo;
 import br.gov.seplag_api_teste.exception.BusinessException;
 import br.gov.seplag_api_teste.exception.NotFoundException;
 import br.gov.seplag_api_teste.repository.ServidorEfetivoRepository;
+import br.gov.seplag_api_teste.reqres.BuscarServidorEfetivoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +50,9 @@ public class ServidorEfetivoService {
 
     public Page<ServidorEfetivo> listar(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    public List<BuscarServidorEfetivoResponse> buscarServidoresEfetivosPorUnidade(Long unidadeId){
+        return repository.buscarServidoresEfetivosPorUnidade(unidadeId);
     }
 }

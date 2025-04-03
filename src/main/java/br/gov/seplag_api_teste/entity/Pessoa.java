@@ -34,4 +34,7 @@ public class Pessoa {
 
     @Column(name = "pes_pai")
     private String nomePai;
+
+    @Column(name = "pes_idade")
+    private Integer idade;
 }

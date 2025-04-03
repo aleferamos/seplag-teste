@@ -1,15 +1,19 @@
 package br.gov.seplag_api_teste.controller;
 
 import br.gov.seplag_api_teste.mappers.FotoPessoaMapper;
+import br.gov.seplag_api_teste.reqres.BuscarServidorEfetivoResponse;
 import br.gov.seplag_api_teste.reqres.FotoPessoaRequest;
 import br.gov.seplag_api_teste.reqres.FotoPessoaResponse;
 import br.gov.seplag_api_teste.service.FotoPessoaService;
+import br.gov.seplag_api_teste.service.ServidorEfetivoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,21 +23,30 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/foto-pessoa")
+@RequestMapping("/endpoints-edital")
 @SecurityRequirement(name = "bearerAuth")
-@Tag(name = "Foto Pessoa", description = "Endpoints relacionados a foto pessoa")
+@Tag(name = "Endpoints edital", description = "Endpoints relacionados ao edital")
 public class FotoPessoaController {
-
     private final FotoPessoaService service;
     private final FotoPessoaMapper mapper;
+    private final ServidorEfetivoService servidorEfetivoService;
 
-    @PostMapping("/salvar")
+    @PostMapping("/upload-fotos")
     @Operation(
-            summary = "Salvar lotação",
-            description = "End point responsável por salvar salvar lotação."
+            summary = "Realizar o upload de uma ou mais fotografias enviando-as para o Min.IO;",
+            description = "Realizar o upload de uma ou mais fotografias enviando-as para o Min.IO;"
     )
-    ResponseEntity<List<FotoPessoaResponse>> salvar(@RequestBody List<FotoPessoaRequest> fotos) {
+    ResponseEntity<List<FotoPessoaResponse>> uploadFotos(@RequestBody List<FotoPessoaRequest> fotos) {
         var fotosSalvas = service.salvar(fotos.stream().map(mapper::toEntity).toList());
         return ResponseEntity.status(HttpStatus.CREATED).body(fotosSalvas.stream().map(mapper::toResponse).toList());
+    }
+
+    @GetMapping("/consultar-servidores-efetivos/{idUnidade}")
+    @Operation(
+            summary = "Consulta servidor efetivo",
+            description = "Endpoint responsavel por consultar servidores efetivos por unidade"
+    )
+    ResponseEntity<List<BuscarServidorEfetivoResponse>> salvar(@PathVariable Long idUnidade) {
+        return ResponseEntity.ok(servidorEfetivoService.buscarServidoresEfetivosPorUnidade(idUnidade));
     }
 }

@@ -8,6 +8,7 @@ public record PessoaResponse(
         Date dataNascimento,
         String sexo,
         String nomeMae,
-        String nomePai
+        String nomePai,
+        Integer idade
 ) {
 }
