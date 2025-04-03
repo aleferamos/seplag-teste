@@ -68,7 +68,29 @@ public class ServidorTemporarioController {
     @PutMapping("/atualizar")
     @Operation(
             summary = "Atualizar servidor efetivo",
-            description = "End point responsável por atualizar um servidor efetivo."
+            description = "End point responsável por atualizar um servidor efetivo.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(
+                                    value = """
+                                            {
+                                              "id":1,
+                                              "pessoa": {
+                                                "nome": "string",
+                                                "dataNascimento": "2025-04-03",
+                                                "sexo": "string",
+                                                "nomeMae": "string",
+                                                "nomePai": "string"
+                                              },
+                                              "dataAdmissao": "2025-04-03",
+                                              "dataDemissao": "2025-04-03"
+                                            }
+                                            """
+                            )
+                    )
+            )
     )
     ResponseEntity<ServidorTemporarioResponse> atualizar(@RequestBody ServidorTemporarioRequest servidorTemporarioRequest) {
         var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorTemporarioRequest));
