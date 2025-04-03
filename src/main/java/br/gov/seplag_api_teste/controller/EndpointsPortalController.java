@@ -44,7 +44,9 @@ public class EndpointsPortalController {
     @GetMapping("/consultar-servidores-efetivos/{idUnidade}")
     @Operation(
             summary = "Consulta servidor efetivo",
-            description = "Endpoint responsavel por consultar servidores efetivos por unidade"
+            description = "Endpoint responsavel por consultar servidores efetivos por unidade. A recuperação das "
+                    + "imagens deverá ser através de links temporários gerados pela biblioteca do Min.IO com tempo "
+                    + "de expiração de 5 minutos."
     )
     ResponseEntity<List<BuscarServidorEfetivoResponse>> salvar(@PathVariable Long idUnidade) {
         return ResponseEntity.ok(servidorEfetivoService.buscarServidoresEfetivosPorUnidade(idUnidade));
