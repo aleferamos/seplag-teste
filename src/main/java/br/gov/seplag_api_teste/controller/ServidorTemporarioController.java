@@ -1,7 +1,6 @@
 package br.gov.seplag_api_teste.controller;
 
 import br.gov.seplag_api_teste.mappers.ServidorTemporarioMapper;
-import br.gov.seplag_api_teste.reqres.ServidorEfetivoResponse;
 import br.gov.seplag_api_teste.reqres.ServidorTemporarioRequest;
 import br.gov.seplag_api_teste.reqres.ServidorTemporarioResponse;
 import br.gov.seplag_api_teste.service.ServidorTemporarioService;
@@ -10,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/servidor-temporario")
+@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Servidor Temporario", description = "Endpoints relacionados a servidores temporarios")
 public class ServidorTemporarioController {
     private final ServidorTemporarioService service;
@@ -35,8 +36,8 @@ public class ServidorTemporarioController {
 
     @PostMapping("/salvar")
     @Operation(
-            summary = "Salvar servidor efetivo",
-            description = "End point responsável por salvar um servidor efetivo.",
+            summary = "Salvar servidor temporario",
+            description = "End point responsável por salvar um servidor temporario.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     required = true,
                     content = @Content(
@@ -67,8 +68,8 @@ public class ServidorTemporarioController {
 
     @PutMapping("/atualizar")
     @Operation(
-            summary = "Atualizar servidor efetivo",
-            description = "End point responsável por atualizar um servidor efetivo.",
+            summary = "Atualizar servidor temporario",
+            description = "End point responsável por atualizar um servidor temporario.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     required = true,
                     content = @Content(
@@ -100,8 +101,8 @@ public class ServidorTemporarioController {
 
     @GetMapping("/buscar-por-id/{id}")
     @Operation(
-            summary = "Buscar servidor efetivo por id",
-            description = "End point responsável buscar servidor efetivo por id"
+            summary = "Buscar servidor temporario por id",
+            description = "End point responsável buscar servidor temporario por id"
     )
     ResponseEntity<ServidorTemporarioResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(mapper.toResponse(service.obterPorId(id)));
@@ -129,7 +130,7 @@ public class ServidorTemporarioController {
             summary = "Excluir servidor",
             description = "End point responsável excluir servidor"
     )
-    ResponseEntity<Page<ServidorEfetivoResponse>> excluir(@PathVariable Long id) {
+    ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();

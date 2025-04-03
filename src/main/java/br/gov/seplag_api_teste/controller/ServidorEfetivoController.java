@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/servidor-efetivo")
 @Tag(name = "Servidor Efetivo", description = "Endpoints relacionados a servidores efetivos")
 public class ServidorEfetivoController {
@@ -126,7 +129,7 @@ public class ServidorEfetivoController {
                     )
             }
     )
-    ResponseEntity<Page<ServidorEfetivoResponse>> excluir(@PathVariable Long id) {
+    ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
