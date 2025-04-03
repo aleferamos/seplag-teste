@@ -6,9 +6,6 @@ spring:
     username: admin
     password: admin
     url: jdbc:postgresql://77.37.40.105:5432/meubanco?currentSchema=gestor_servidor
-  jpa:
-    hibernate:
-      ddl-auto: update
 
 security:
   jwt:

@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,4 +46,26 @@ public class ServidorEfetivoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
     }
+
+    @PutMapping("/atualizar")
+    @Operation(
+            summary = "Atualizar servidor efetivo",
+            description = "End point responsável por atualizar um servidor efetivo.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "202",
+                            description = "Servidor atualizar com sucesso",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ServidorEfetivoResponse.class)
+                            )
+                    )
+            }
+    )
+    ResponseEntity<ServidorEfetivoResponse> atualizar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest){
+        var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorEfetivoRequest));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(servidorEfeitoSalvo));
+    }
+
 }
