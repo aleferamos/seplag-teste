@@ -1,9 +1,8 @@
 package br.gov.seplag_api_teste.reqres;
 
-public record UnidadeRequest(
+public record CidadeRequest(
         Long id,
         String nome,
-        String sigla,
-        EnderecoRequest endereco
+        String uf
 ) {
 }

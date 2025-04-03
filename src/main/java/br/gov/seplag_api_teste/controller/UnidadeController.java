@@ -46,7 +46,16 @@ public class UnidadeController {
                                     value = """
                                             {
                                               "nome": "string",
-                                              "sigla": "string"
+                                              "sigla": "string",
+                                              "endereco": {
+                                                "tipoLogradouro": "string",
+                                                "logradouro": "string",
+                                                "numero": 1073741824,
+                                                "bairro": "string",
+                                                "cidade": {
+                                                  "id": 1
+                                                }
+                                              }
                                             }
                                             """
                             )
@@ -62,7 +71,34 @@ public class UnidadeController {
     @PutMapping("/atualizar")
     @Operation(
             summary = "Atualizar unidade",
-            description = "End point responsável por atualizar unidade."
+            description = "End point responsável por atualizar unidade.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = @ExampleObject(
+                                    value = """
+                                            {
+                                              "id": 1,
+                                              "nome": "string",
+                                              "sigla": "string",
+                                              "endereco": {
+                                                "id": 1,
+                                                "tipoLogradouro": "string",
+                                                "logradouro": "string",
+                                                "numero": 1073741824,
+                                                "bairro": "string",
+                                                "cidade": {
+                                                  "id": 1,
+                                                  "nome": "string",
+                                                  "uf": "string"
+                                                }
+                                              }
+                                            }
+                                            """
+                            )
+                    )
+            )
     )
     ResponseEntity<UnidadeResponse> atualizar(@RequestBody UnidadeRequest unidadeRequest) {
         var unidadeSalva = service.atualizar(mapper.toEntity(unidadeRequest));
