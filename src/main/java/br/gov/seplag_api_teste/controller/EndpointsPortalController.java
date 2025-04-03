@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/endpoints-edital")
 @SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Endpoints edital", description = "Endpoints relacionados ao edital")
-public class FotoPessoaController {
+public class EndpointsPortalController {
     private final FotoPessoaService service;
     private final FotoPessoaMapper mapper;
     private final ServidorEfetivoService servidorEfetivoService;

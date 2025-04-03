@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServidorEfetivoService {
     private final ServidorEfetivoRepository repository;
+    private final MinioService minioService;
 
     public ServidorEfetivo salvar(ServidorEfetivo servidorEfetivo) {
         validarServidor(servidorEfetivo);
@@ -53,6 +54,13 @@ public class ServidorEfetivoService {
     }
 
     public List<BuscarServidorEfetivoResponse> buscarServidoresEfetivosPorUnidade(Long unidadeId){
-        return repository.buscarServidoresEfetivosPorUnidade(unidadeId);
+        var servidores = repository.buscarServidoresEfetivosPorUnidade(unidadeId);
+//
+//        servidores.forEach(servidor ->
+//                servidor.setLinkFotoTemporario(minioService.gerarLinkTemporario(servidor.getLinkFotoTemporario())));
+
+        return servidores;
     }
+
+
 }

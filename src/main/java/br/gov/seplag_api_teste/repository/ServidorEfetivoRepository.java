@@ -13,7 +13,7 @@ public interface ServidorEfetivoRepository extends JpaRepository<ServidorEfetivo
     Boolean existsByMatricula(String matricula);
 
     @Query("select distinct new br.gov.seplag_api_teste.reqres.BuscarServidorEfetivoResponse(p.nome, p.idade, "
-            + "l.unidade, fp.nomeArquivo) "
+            + "l.unidade) "
             + "from ServidorEfetivo se "
             + "join Lotacao l on l.pessoa.id = se.pessoa.id "
             + "join l.pessoa p "

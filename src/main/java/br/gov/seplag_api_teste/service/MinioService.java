@@ -2,14 +2,17 @@ package br.gov.seplag_api_teste.service;
 
 import br.gov.seplag_api_teste.config.MinioPropertiesConfig;
 import io.minio.BucketExistsArgs;
+import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.http.Method;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.util.Base64;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +50,23 @@ public class MinioService {
 
         } catch (Exception e) {
             throw new InternalError("Erro ao enviar arquivo para o MinIO", e);
+        }
+    }
+
+    public String gerarLinkTemporario(String nomeArquivo) {
+        try {
+            MinioClient client = getClient();
+
+            return client.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET)
+                            .bucket(properties.getBucket())
+                            .object(nomeArquivo)
+                            .expiry(1, TimeUnit.MINUTES)
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new InternalError("Erro ao gerar link temporário para o arquivo", e);
         }
     }
 }
