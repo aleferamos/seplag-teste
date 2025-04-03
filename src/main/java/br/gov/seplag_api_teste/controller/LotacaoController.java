@@ -6,9 +6,6 @@ import br.gov.seplag_api_teste.reqres.LotacaoResponse;
 import br.gov.seplag_api_teste.service.LotacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -37,28 +34,7 @@ public class LotacaoController {
     @PostMapping("/salvar")
     @Operation(
             summary = "Salvar lotação",
-            description = "End point responsável por salvar salvar lotação.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    value = """
-                                            {
-                                              "pessoa": {
-                                                "id": 0
-                                              },
-                                              "unidade": {
-                                                "id": 0
-                                              },
-                                              "dataLotacao": "2025-04-03",
-                                              "dataRemocao": "2025-04-03",
-                                              "portaria": "portaria_c8968699cb20"
-                                            }
-                                            """
-                            )
-                    )
-            )
+            description = "End point responsável por salvar salvar lotação."
     )
     ResponseEntity<LotacaoResponse> salvar(@RequestBody LotacaoRequest lotacaoRequest) {
         var lotacaoSalva = service.salvar(mapper.toEntity(lotacaoRequest));
@@ -89,13 +65,7 @@ public class LotacaoController {
     @GetMapping("/listar")
     @Operation(
             summary = "Listar lotações",
-            description = "End point responsável listar lotações",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "lotação retornada com sucesso"
-                    )
-            }
+            description = "End point responsável listar lotações"
     )
     ResponseEntity<Page<LotacaoResponse>> listar(@Parameter(hidden = true) Pageable pageable) {
         var lotacoes = service.listar(pageable).map(mapper::toResponse);

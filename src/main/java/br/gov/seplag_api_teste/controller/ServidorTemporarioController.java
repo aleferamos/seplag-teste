@@ -6,9 +6,6 @@ import br.gov.seplag_api_teste.reqres.ServidorTemporarioResponse;
 import br.gov.seplag_api_teste.service.ServidorTemporarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -37,28 +34,7 @@ public class ServidorTemporarioController {
     @PostMapping("/salvar")
     @Operation(
             summary = "Salvar servidor temporario",
-            description = "End point responsável por salvar um servidor temporario.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    value = """
-                                            {
-                                              "pessoa": {
-                                                "nome": "string",
-                                                "dataNascimento": "2025-04-03",
-                                                "sexo": "string",
-                                                "nomeMae": "string",
-                                                "nomePai": "string"
-                                              },
-                                              "dataAdmissao": "2025-04-03",
-                                              "dataDemissao": "2025-04-03"
-                                            }
-                                            """
-                            )
-                    )
-            )
+            description = "End point responsável por salvar um servidor temporario."
     )
     ResponseEntity<ServidorTemporarioResponse> salvar(@RequestBody ServidorTemporarioRequest servidorTemporarioRequest) {
         var servidorEfeitoSalvo = service.salvar(mapper.toEntity(servidorTemporarioRequest));
@@ -69,30 +45,7 @@ public class ServidorTemporarioController {
     @PutMapping("/atualizar")
     @Operation(
             summary = "Atualizar servidor temporario",
-            description = "End point responsável por atualizar um servidor temporario.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    value = """
-                                            {
-                                              "id":1,
-                                              "pessoa": {
-                                                "id":1,
-                                                "nome": "string",
-                                                "dataNascimento": "2025-04-03",
-                                                "sexo": "string",
-                                                "nomeMae": "string",
-                                                "nomePai": "string"
-                                              },
-                                              "dataAdmissao": "2025-04-03",
-                                              "dataDemissao": "2025-04-03"
-                                            }
-                                            """
-                            )
-                    )
-            )
+            description = "End point responsável por atualizar um servidor temporario."
     )
     ResponseEntity<ServidorTemporarioResponse> atualizar(@RequestBody ServidorTemporarioRequest servidorTemporarioRequest) {
         var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorTemporarioRequest));
@@ -112,13 +65,7 @@ public class ServidorTemporarioController {
     @GetMapping("/listar")
     @Operation(
             summary = "Listar Servidor",
-            description = "End point responsável buscar servidor Listar Servidor",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Servidor retornado com sucesso"
-                    )
-            }
+            description = "End point responsável buscar servidor Listar Servidor"
     )
     ResponseEntity<Page<ServidorTemporarioResponse>> listar(@Parameter(hidden = true) Pageable pageable) {
         var servidores = service.listar(pageable).map(mapper::toResponse);

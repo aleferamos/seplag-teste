@@ -6,9 +6,6 @@ import br.gov.seplag_api_teste.reqres.ServidorEfetivoResponse;
 import br.gov.seplag_api_teste.service.ServidorEfetivoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -38,27 +35,7 @@ public class ServidorEfetivoController {
     @PostMapping("/salvar")
     @Operation(
             summary = "Salvar servidor efetivo",
-            description = "End point responsável por salvar um servidor efetivo.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    value = """
-                                            {
-                                              "pessoa": {
-                                                "nome": "string",
-                                                "dataNascimento": "2025-04-03",
-                                                "sexo": "string",
-                                                "nomeMae": "string",
-                                                "nomePai": "string"
-                                              },
-                                              "matricula": "string"
-                                            }
-                                            """
-                            )
-                    )
-            )
+            description = "End point responsável por salvar um servidor efetivo."
     )
     ResponseEntity<ServidorEfetivoResponse> salvar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest) {
         var servidorEfeitoSalvo = service.salvar(mapper.toEntity(servidorEfetivoRequest));
@@ -69,29 +46,7 @@ public class ServidorEfetivoController {
     @PutMapping("/atualizar")
     @Operation(
             summary = "Atualizar servidor efetivo",
-            description = "End point responsável por atualizar um servidor efetivo.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    value = """
-                                            {
-                                              "id": 1,
-                                              "pessoa": {
-                                                "id": 1,
-                                                "nome": "string",
-                                                "dataNascimento": "2025-04-03",
-                                                "sexo": "string",
-                                                "nomeMae": "string",
-                                                "nomePai": "string"
-                                              },
-                                              "matricula": "string"
-                                            }
-                                            """
-                            )
-                    )
-            )
+            description = "End point responsável por atualizar um servidor efetivo."
     )
     ResponseEntity<ServidorEfetivoResponse> atualizar(@RequestBody ServidorEfetivoRequest servidorEfetivoRequest) {
         var servidorEfeitoSalvo = service.atualizar(mapper.toEntity(servidorEfetivoRequest));
@@ -122,13 +77,7 @@ public class ServidorEfetivoController {
     @DeleteMapping("/excluir-por-id/{id}")
     @Operation(
             summary = "Excluir servidor",
-            description = "End point responsável excluir servidor",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "202",
-                            description = "Servidor excluido com sucesso"
-                    )
-            }
+            description = "End point responsável excluir servidor"
     )
     ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
