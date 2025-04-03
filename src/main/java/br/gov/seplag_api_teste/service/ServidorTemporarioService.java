@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +18,6 @@ public class ServidorTemporarioService {
     }
 
     public ServidorTemporario atualizar(ServidorTemporario servidorTemporario) {
-        var servidorEncontrado = obterPorId(servidorTemporario.getId());
-
-        if (!ObjectUtils.isEmpty(servidorTemporario.getPessoa())) {
-            servidorTemporario.getPessoa().setId(servidorEncontrado.getPessoa().getId());
-        }
-
         return repository.save(servidorTemporario);
     }
 

@@ -79,6 +79,7 @@ public class ServidorEfetivoController {
                                             {
                                               "id": 1,
                                               "pessoa": {
+                                                "id": 1,
                                                 "nome": "string",
                                                 "dataNascimento": "2025-04-03",
                                                 "sexo": "string",
