@@ -1,5 +1,6 @@
 package br.gov.seplag_api_teste.service;
 
+import br.gov.seplag_api_teste.entity.Endereco;
 import br.gov.seplag_api_teste.entity.FotoPessoa;
 import br.gov.seplag_api_teste.entity.ServidorEfetivo;
 import br.gov.seplag_api_teste.exception.BusinessException;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,5 +81,10 @@ public class ServidorEfetivoService {
 
         return new ArrayList<>();
 
+    }
+
+    public List<Endereco> buscarEnderecoUnidadeDoServidorEfetivo(String nome){
+        var nomePessoa = !ObjectUtils.isEmpty(nome) ? nome.replace(" ", "%") : null;
+        return repository.buscarEnderecoUnidadeDoServidorEfetivo(nomePessoa);
     }
 }
