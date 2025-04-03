@@ -5,8 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -17,9 +22,20 @@ public class Lotacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "unid_nome")
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name = "pes_id")
+    private Pessoa pessoa;
 
-    @Column(name = "unid_sigla")
-    private String sigla;
+    @OneToOne
+    @JoinColumn(name = "unid_id")
+    private Unidade unidade;
+
+    @Column(name = "lot_data_lotacao")
+    private Date dataLotacao;
+
+    @Column(name = "lot_data_remocao")
+    private Date dataRemocao;
+
+    @Column(name = "lot_portaria")
+    private String portaria;
 }
