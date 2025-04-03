@@ -28,7 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/endpoints-edital")
 @SecurityRequirement(name = "bearerAuth")
-@Tag(name = "Endpoints edital", description = "Endpoints relacionados ao edital")
+@Tag(name = "Endpoints Edital", description = "Endpoints relacionados ao edital")
 public class EndpointsPortalController {
     private final FotoPessoaService service;
     private final FotoPessoaMapper mapper;
