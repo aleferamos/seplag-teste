@@ -5,8 +5,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: admin
-    password: admin
-    url: jdbc:postgresql://77.37.40.105:5432/meubanco?currentSchema=gestor_servidor
+    password: admin123
+    url: jdbc:postgresql://localhost:5432/meubanco?currentSchema=gestor_servidor
 
 security:
   jwt:
