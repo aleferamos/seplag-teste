@@ -67,3 +67,19 @@ Password: admin123
 - Após isso a ai já está operante, agora basta acessar o swagger para testar os end-points (http://localhost:8080/seplag-api/swagger-ui/index.html), verá uma saída como essa.
 ![image](https://github.com/user-attachments/assets/628ff20d-559f-404d-b4cd-613341435eeb)
 
+
+# Conteúdo Swagger
+Vejamos, temos os CRUD de Servidor Efetivo, Unidade, Lotação e Servidor Temporario. E tambem temos os end-points que foi solicitado no processo seletivo oque aparece nessa imagem.
+![image](https://github.com/user-attachments/assets/d0d4c589-af52-4bd8-a793-a274f626d605)
+
+POST
+/endpoints-edital/upload-fotos - esse end point vamos utilizar para subir fotografias de uma pessoa para utilizar, primeiramente terá que criar uma pessoa então podemos usar o end-point.
+
+POST
+/servidor-efetivo/salvar - esse end point serve para salvar um servidor efetivo junto com a pessoa dele, então primeiro vamos fazer a autenticação .
+
+POST
+/auth/login
+
+Basta clicar em (try it out) foi configurado já com o usuario e senha do usuario que foi inserido no banco.
+![image](https://github.com/user-attachments/assets/ec7e5a8f-6094-4fa7-a484-c121b0d772ac)
