@@ -51,3 +51,19 @@ Password: admin123
 [INFO] Finished at: 2025-04-03T21:00:11-04:00
 [INFO] ------------------------------------------------------------------------
 ```
+- Após isso basta rodar o comando (java -jar .\target\seplag-api-teste-0.0.1-SNAPSHOT.jar) na pasta raiz, ou seja, nessa que você já está e verá uma saída como esta.
+```bash
+2025-04-03T21:01:46.196-04:00  INFO 12928 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-03T21:01:46.200-04:00  INFO 12928 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-03T21:01:46.731-04:00  WARN 12928 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-03T21:01:47.073-04:00  INFO 12928 --- [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-04-03T21:01:47.074-04:00  WARN 12928 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically
+ configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-04-03T21:01:47.179-04:00  INFO 12928 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-03T21:01:49.128-04:00  INFO 12928 --- [           main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-04-03T21:01:49.560-04:00  INFO 12928 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/seplag-api'
+2025-04-03T21:01:49.575-04:00  INFO 12928 --- [           main] b.g.s.SeplagApiTesteApplication          : Started SeplagApiTesteApplication in 9.406 seconds (process running for 10.12)
+```
+- Após isso a ai já está operante, agora basta acessar o swagger para testar os end-points (http://localhost:8080/seplag-api/swagger-ui/index.html), verá uma saída como essa.
+![image](https://github.com/user-attachments/assets/628ff20d-559f-404d-b4cd-613341435eeb)
+
