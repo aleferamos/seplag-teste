@@ -16,4 +16,11 @@ docker-compose up -d
  ✔ Container minio              Started                                                                                                                                                                                                                          1.0s 
  ✔ Container postgres           Started
 ```
-
+- Após isso já temos o banco de dados e o minio subidos, com o usuario e senha já inseridos para poder fazer autenticação.
+- Confirme que o banco está subido com as seguintes credenciais.
+```bash
+Host - localhost
+Banco de dados - meubanco
+Usuario - admin
+Senha - admin123
+```
