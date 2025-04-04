@@ -83,3 +83,28 @@ POST
 
 Basta clicar em (try it out) foi configurado já com o usuario e senha do usuario que foi inserido no banco.
 ![image](https://github.com/user-attachments/assets/ec7e5a8f-6094-4fa7-a484-c121b0d772ac)
+
+Será gerado um json parecido com este
+```bash
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6W10sInN1YiI6InNlcGxhZ0BlbWFpbC5jb20iLCJpYXQiOjE3NDM3Mjg5NjMsImV4cCI6MTc0MzcyOTI2M30.1eLvzqrzaemqcggnglTpoDper6W3x9q0YLiNIdyAI00",
+  "expiresIn": 300000,
+  "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZXBsYWdAZW1haWwuY29tIiwiaWF0IjoxNzQzNzI4OTYzLCJleHAiOjE3NDQzMzM3NjN9.fE0vPDnJMld26OFnVzIxhaUgx-GnyaMRDtLzjNshZ5s"
+}
+```
+
+Basta copiar o token e inserir no campo de login do swagger
+![image](https://github.com/user-attachments/assets/361f25fc-71ec-4cb3-aed3-d4da61b1555c)
+![image](https://github.com/user-attachments/assets/1fdb701a-d77f-437b-af85-4eaa44911d68)
+
+- Após isso você já está autenticado agora vamos voltar pro end point de cadastro de pessoa
+
+POST
+/servidor-efetivo/salvar
+
+![image](https://github.com/user-attachments/assets/085d81fe-139e-47f3-9d1d-21cb29b86336)
+
+Caso de certo você verá essa imagem
+
+![image](https://github.com/user-attachments/assets/a84376f8-c671-4a0a-8470-e0e4080d634a)
+
