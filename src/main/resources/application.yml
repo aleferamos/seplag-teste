@@ -20,7 +20,7 @@ server:
     context-path: /seplag-api
 
 minio:
-  url: http://77.37.40.105:9000
+  url: http://localhost:9000
   access-key: alefedias
   secret-key: alefek159
   bucket: fotos-pessoa
