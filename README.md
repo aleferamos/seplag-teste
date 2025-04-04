@@ -1,139 +1,195 @@
 # 📘 Seplag Teste
 
-Projeto Spring Boot para gestão de servidores efetivos e temporários, com integração de autenticação JWT, armazenamento de fotos via MinIO e banco de dados PostgreSQL.
+Projeto desenvolvido para gerenciar servidores efetivos e temporários com autenticação JWT, upload de fotos no MinIO e persistência em banco PostgreSQL.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## 🛠 Tecnologias utilizadas
 
-- ☕ **Java 23** + **Spring Boot**
-- 🔐 **Spring Security** (JWT)
-- 🐳 **Docker** + Docker Compose
-- 🐘 **PostgreSQL**
-- 🗂 **MinIO** (Armazenamento de arquivos)
-- 🧪 **Swagger UI** (Documentação de API)
-
----
-
-## 🚀 Como Executar o Projeto
-
-### ✅ Pré-requisitos
-
-- [Instalar Docker](https://www.docker.com)
-- [Instalar Java/OpenJDK 23](https://www.oracle.com/br/java/technologies/downloads/#java23)
-- (Opcional) [DBeaver - cliente de banco recomendado](https://dbeaver.io)
+- ☕ Java (Spring Boot)
+- 🔐 Spring Security com JWT
+- 🐳 Docker & Docker Compose
+- 🐘 PostgreSQL
+- 🗂 MinIO
 
 ---
 
-### 📦 Subindo os containers com Docker
+## 🚀 Instruções para execução
 
-1. Clone o repositório:
-   git clone https://github.com/seu-user/seplag-teste
-   cd seplag-teste/scripts
+- Verifique se a máquina possui o Docker instalado. Caso não, instale em: https://www.docker.com
 
-2. Suba os containers:
-   docker-compose up -d
+- Clone este projeto. Após a clonagem, entre na pasta `scripts`:
 
-   Saída esperada:
-   [+] Running 5/5
-    ✔ Network scripts_default      Created
-    ✔ Volume "scripts_pgdata"      Created
-    ✔ Volume "scripts_minio_data"  Created
-    ✔ Container postgres           Started
-    ✔ Container minio              Started
+```bash
+cd seplag-teste/scripts
+docker-compose up -d
+```
 
----
+### Saída esperada:
 
-### 🗄 Banco de Dados
+```bash
+[+] Running 5/5
+ ✔ Network scripts_default      Created
+ ✔ Volume "scripts_pgdata"      Created
+ ✔ Volume "scripts_minio_data"  Created
+ ✔ Container minio              Started
+ ✔ Container postgres           Started
+```
 
-- **Host:** localhost
-- **Porta:** 5432
-- **Banco:** meubanco
-- **Usuário:** admin
-- **Senha:** admin123
+- O banco de dados e o MinIO estarão prontos para uso, com usuário e senha configurados.
 
----
+- Conecte-se ao banco com os dados abaixo (ex: via DBeaver: https://dbeaver.io):
 
-### 🧱 MinIO (Armazenamento)
+```bash
+Host: localhost
+Banco de dados: meubanco
+Usuário: admin
+Senha: admin123
+```
 
-- **Painel:** http://localhost:9001
-- **Access Key:** admin
-- **Secret Key:** admin123
+- Acesse o painel do MinIO em: http://localhost:9001
 
----
+```bash
+Username: admin
+Password: admin123
+```
 
-## ☕ Compilando o projeto
+- Instale o Java JDK 23: https://www.oracle.com/br/java/technologies/downloads/#java23
 
-1. Verifique se a variável de ambiente JAVA_HOME está apontando para seu JDK 23:
-   JAVA_HOME=C:\Program Files\Java\jdk-23
-   Path += C:\Program Files\Java\jdk-23\bin
+- Após a instalação, configure a variável de ambiente:
 
-2. Compile o projeto:
-   ./mvnw clean package -DskipTests
+```bash
+JAVA_HOME=C:\Program Files\Java\jdk-23
+Path += C:\Program Files\Java\jdk-23\bin
+```
 
-3. Execute o .jar:
-   java -jar ./target/seplag-api-teste-0.0.1-SNAPSHOT.jar
+![JAVA_HOME](https://github.com/user-attachments/assets/59a2a0e4-52c1-42a6-abcf-fa94cc32ca9f)
 
----
+- Volte para a raiz do projeto e compile com Maven:
 
-## 🧪 Acessando o Swagger
+```bash
+cd ..
+./mvnw clean package -DskipTests
+```
 
-- URL: http://localhost:8080/seplag-api/swagger-ui/index.html
+### Saída esperada:
+```bash
+[INFO] --- jar:3.4.2:jar (default-jar) @ seplag-api-teste ---
+[INFO] BUILD SUCCESS
+```
 
----
+- Rode a aplicação:
 
-## 🔐 Autenticação
+```bash
+java -jar ./target/seplag-api-teste-0.0.1-SNAPSHOT.jar
+```
 
-1. Faça login com o usuário padrão:
-   POST /auth/login
-   {
-     "email": "seplag@email.com",
-     "senha": "admin123"
-   }
+### Saída esperada (resumo):
+```bash
+Tomcat started on port 8080 (http) with context path '/seplag-api'
+Started SeplagApiTesteApplication
+```
 
-2. Copie o token JWT da resposta e clique em Authorize no Swagger para colar o token.
+- Acesse o Swagger em: http://localhost:8080/seplag-api/swagger-ui/index.html
 
----
-
-## 📷 Upload de Fotos
-
-- Endpoint: POST /endpoints-edital/upload-fotos
-- Deve ser usado após cadastrar a pessoa no sistema.
-
----
-
-## 🧑 Cadastro de Servidor Efetivo
-
-1. Faça login para obter o token.
-2. Utilize o endpoint:
-   POST /servidor-efetivo/salvar
+![Swagger](https://github.com/user-attachments/assets/628ff20d-559f-404d-b4cd-613341435eeb)
 
 ---
 
-## 🏢 Cadastro de Unidade
+## 🧪 Conteúdo Swagger
 
-1. Execute o SQL para cadastrar a cidade:
-   INSERT INTO gestor_servidor.cidade (cid_id, cid_nome, cid_uf) VALUES (1, 'Cuiabá', 'MT');
+Endpoints principais:
 
-2. Cadastrar a unidade:
-   POST /unidade/salvar
-   {
-     "nome": "Seplag",
-     "sigla": "SG",
-     "endereco": {
-       "tipoLogradouro": "Rua",
-       "logradouro": "Bloco III - Complexo Paiaguás, R. C - Centro Político Administrativo, Cuiabá - MT, 78049-005",
-       "numero": 1,
-       "bairro": "Complexo Paiaguás",
-       "cidade": { "id": 1 }
-     }
-   }
+- `POST /auth/login`: autenticação
+- `POST /servidor-efetivo/salvar`: cadastro de servidor
+- `POST /endpoints-edital/upload-fotos`: upload de fotografias
 
 ---
 
-## 🧍 Lotação de Servidor
+### 🧾 Exemplo de login:
 
+```bash
+{
+  "email": "seplag@email.com",
+  "senha": "admin123"
+}
+```
+
+![Login](https://github.com/user-attachments/assets/ec7e5a8f-6094-4fa7-a484-c121b0d772ac)
+
+Resposta esperada:
+```bash
+{
+  "token": "seu-token-jwt",
+  "expiresIn": 300000,
+  "refreshToken": "seu-refresh-token"
+}
+```
+
+Cole o token no botão **Authorize** do Swagger.
+
+![Authorize](https://github.com/user-attachments/assets/361f25fc-71ec-4cb3-aed3-d4da61b1555c)
+
+---
+
+## 👤 Cadastro de pessoa e envio de foto
+
+1. `POST /servidor-efetivo/salvar`
+
+![Salvar Pessoa](https://github.com/user-attachments/assets/085d81fe-139e-47f3-9d1d-21cb29b86336)
+
+2. `POST /endpoints-edital/upload-fotos`
+
+![Upload Foto](https://github.com/user-attachments/assets/73b8cfdc-265c-4f87-8777-d746bac48478)
+
+Caso o token expire:
+
+```bash
+{
+  "error": "Sessão expirada. Favor fazer login novamente."
+}
+```
+
+Use o endpoint de **refresh**:
+
+```bash
+{
+  "refreshToken": "seu-refresh-token"
+}
+```
+
+![Refresh](https://github.com/user-attachments/assets/77c12457-666e-4849-b8a0-63a75c92d1e5)
+
+---
+
+## 🏢 Cadastro de unidade e lotação
+
+1. Inserir cidade:
+```bash
+INSERT INTO gestor_servidor.cidade (cid_id, cid_nome, cid_uf) VALUES (1, 'Cuiabá', 'MT');
+```
+
+2. Cadastrar unidade:
+```bash
+POST /unidade/salvar
+
+{
+  "nome": "Seplag",
+  "sigla": "SG",
+  "endereco": {
+    "tipoLogradouro": "Rua",
+    "logradouro": "Bloco III - Complexo Paiaguás...",
+    "numero": 1,
+    "bairro": "Complexo Paiaguás",
+    "cidade": { "id": 1 }
+  }
+}
+```
+
+3. Lotar servidor:
+```bash
 POST /lotacao/salvar
+
 {
   "pessoa": { "id": 1 },
   "unidade": { "id": 1 },
@@ -141,64 +197,53 @@ POST /lotacao/salvar
   "dataRemocao": "2025-04-04",
   "portaria": "123"
 }
+```
 
 ---
 
-## 🔄 Refresh Token
+## 🔍 Consultar servidor efetivo
 
-Se o token JWT expirar (5 minutos), use o refreshToken no endpoint:
+`GET /endpoints-edital/consultar-servidores-efetivos/1`
 
-POST /auth/refresh
-{
-  "refreshToken": "seu_refresh_token_aqui"
-}
+Retorna:
 
----
-
-## 🔎 Buscar Endereço por Nome de Servidor
-
-GET /endpoints-edital/consultar-endereco-unidade-servidor-efetivo?nome=al
-
-Retorna o endereço da unidade onde o servidor está lotado.
-
----
-
-## ✅ Exemplo de Resposta Final
-
+```bash
 {
   "idPessoa": 1,
   "nome": "Alefe Patrick",
-  "idade": 28,
-  "unidadeLotacao": {
-    "id": 1,
-    "nome": "Seplag",
-    "sigla": "SG",
-    "endereco": {
-      "id": 1,
-      "tipoLogradouro": "Rua",
-      "logradouro": "Bloco III - Complexo Paiaguás",
-      "numero": 1,
-      "bairro": "Complexo Paiaguás",
-      "cidade": {
-        "id": 1,
-        "nome": "Cuiabá",
-        "uf": "MT"
-      }
-    }
-  },
+  ...
   "linksFotosTemporarias": [
-    "http://localhost:9000/fotos-pessoa/1/hash_da_foto.png?...assinatura..."
+    "http://localhost:9000/fotos-pessoa/1/seu-hash.png?...assinatura..."
   ]
 }
+```
+
+Acesse a URL para visualizar a imagem (expira em 5 minutos).
 
 ---
 
-## 👏 Conclusão
+## 📍 Consultar endereço por nome
 
-O projeto está pronto para testes. Explore os endpoints, cadastre novos servidores, lote-os em unidades e gerencie as fotos associadas.
+`GET /endpoints-edital/consultar-endereco-unidade-servidor-efetivo?nome=al`
 
-Boa sorte no processo seletivo! 🚀
+```bash
+[
+  {
+    "id": 1,
+    "tipoLogradouro": "Rua",
+    "logradouro": "Bloco III - Complexo Paiaguás...",
+    "cidade": {
+      "nome": "Cuiabá",
+      "uf": "MT"
+    }
+  }
+]
+```
 
 ---
 
-> Desenvolvido por **Alefe Patrick Dias Ramos / Equipe Seplag Teste**
+## ✅ Final
+
+Você pode cadastrar novas pessoas, lotá-las, enviar fotos e visualizar os dados via Swagger.
+
+Parabéns! Projeto rodando com sucesso! 🚀
