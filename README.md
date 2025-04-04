@@ -5,8 +5,7 @@
 # Instruções para executação
 
 - Primeiramente Verifique se a máquina possui Docker se não tiver instale. https://www.docker.com
-- Clone este projeto, após a clonagem entre na pasta scripts fica assim seplag-teste\scripts, digite docker-compose up -d essa é a saída esperada.
-docker-compose up -d
+- Clone este projeto, após a clonagem entre na pasta scripts fica assim seplag-teste\scripts, digite (docker-compose up -d) essa é a saída esperada.
 
 ```bash
 [+] Running 5/5
@@ -29,3 +28,8 @@ Senha: admin123
 Username: admin
 Password: admin123
 ```
+- Após isso basta instalar o java ou open jdk 23. https://www.oracle.com/br/java/technologies/downloads/#java23
+- Após a instalação insira a variável de ambiente JAVA_HOME=C:\Program Files\Java\jdk-23 e atualizar o Path com o bin dessa pasta C:\Program Files\Java\jdk-23\bin e fica da seguinte forma.
+  ![image](https://github.com/user-attachments/assets/59a2a0e4-52c1-42a6-abcf-fa94cc32ca9f)
+
+- basta voltar um diretorio cd .. e digitar o comando (./mvnw clean package -DskipTests)
