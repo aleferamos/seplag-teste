@@ -1,3 +1,13 @@
+## Dados da Inscrição:
+
+- Inscrição: 9206
+- Data da Inscrição: 03/04/2025 22:28:59
+- Nome: ALEFE PATRICK DIAS RAMOS
+- E-mail: alefepdias@gmail.com
+- CPF: 057.118.301-80
+- RG: 26386003
+- Celular: (65) 99303-8547
+
 # 📘 Seplag Teste
 
 Projeto desenvolvido para gerenciar servidores efetivos e temporários com autenticação JWT, upload de fotos no MinIO e persistência em banco PostgreSQL.
